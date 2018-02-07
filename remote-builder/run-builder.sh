@@ -36,6 +36,11 @@ gcloud compute scp --compress --recurse \
        ./ ${USERNAME}@${INSTANCE_NAME}:${REMOTE_WORKSPACE} \
        --ssh-key-file=${KEYNAME}
 
+if [ ! -z "$PROVISION" ]; then
+    gcloud compute ssh --ssh-key-file=${KEYNAME} \
+        ${USERNAME}@${INSTANCE_NAME} -- ${PROVISION}
+fi
+
 gcloud compute ssh --ssh-key-file=${KEYNAME} \
        ${USERNAME}@${INSTANCE_NAME} -- ${COMMAND}
 
